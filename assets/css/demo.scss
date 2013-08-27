@@ -1,0 +1,14 @@
+//✩✩✩✩✩✩✩✩✩✩✩✩✩✩✩✩✩✩✩✩✩✩✩✩
+// Demo Styles
+//✩✩✩✩✩✩✩✩✩✩✩✩✩✩✩✩✩✩✩✩✩✩✩✩
+@import 'bourbon/bourbon';
+
+// Headings
+.demo-headings, .demo-styled-list, .demo-wells-info {
+  @include clearfix;
+}
+
+// Accordion
+.demo-accordion {
+  margin-bottom: 40px;
+}

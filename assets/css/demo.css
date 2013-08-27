@@ -1,0 +1,7 @@
+.demo-headings:after, .demo-styled-list:after, .demo-wells-info:after {
+  content: "";
+  display: table;
+  clear: both; }
+
+.demo-accordion {
+  margin-bottom: 40px; }
