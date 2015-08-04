@@ -1,0 +1,77 @@
+{
+    "id": "typography",
+    "name": "Typography",
+    "hasScript": "yes",
+    "items" : {
+        "fonts": [
+            {
+                "heading": "1",
+                "fontName" : "GalanoGrotesque Bold",
+                "fontSize": "35px",
+                "className": "h1",
+                "title": "Heading One"
+            },
+            {
+                "heading": "2",
+                "fontName" : "GalanoGrotesque Bold",
+                "fontSize": "30px",
+                "className": "h2",
+                "title": "Heading Two"
+            },
+            {
+                "heading": "3",
+                "fontName" : "GalanoGrotesque Bold",
+                "fontSize": "25px",
+                "className": "h3",
+                "title": "Heading Three"
+            },
+            {
+                "heading": "4",
+                "fontName" : "GalanoGrotesque Bold",
+                "fontSize": "20px",
+                "className": "h4",
+                "title": "Heading Four"
+            },
+            {
+                "heading": "4",
+                "fontName" : "GalanoGrotesque Bold",
+                "fontSize": "20px",
+                "className": "h4",
+                "title": "<span>Heading</span> Four"
+            },
+            {
+                "heading": "5",
+                "fontName" : "GalanoGrotesque Bold",
+                "fontSize": "15px",
+                "className": "h5",
+                "title": "Heading Five"
+            },
+            {
+                "heading": "5",
+                "fontName" : "GalanoGrotesque Bold",
+                "fontSize": "15px",
+                "className": "h5",
+                "title": "<span>Heading</span> Five"
+            }
+        ],
+        "paragraphsName": "Paragraphs",
+        "paragraphs": [
+            {
+                "className": "lead-copy",
+                "text": "This is lead copy: Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            },
+            {
+                "className": "body-copy",
+                "text": "This is body copy: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sodales erat in feugiat tincidunt. Sed a velit nulla. Quisque eget gravida ante, nec feugiat orci."
+            },
+            {
+                "className": "small-text",
+                "text": "This is small text."
+            },
+            {
+                "className": "small-text bold",
+                "text": "This is small bold text."
+            }
+        ]
+    }
+}
