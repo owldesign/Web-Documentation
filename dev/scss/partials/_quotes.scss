@@ -1,0 +1,22 @@
+/* ============================================ *
+ * Quotes
+ * ============================================ */
+.quote {
+  position: relative;
+  width: 420px;
+  padding: 10px 50px;
+  box-sizing: border-box;
+  p { font-size: 2em; line-height: 1.4em; color: black; }
+  span { display: block; font-size: .7em; text-align: right; }
+  &:before, &:after { position: absolute; font-family: 'FontAwesome'; font-size: 3em; color: black; }
+  &:before {
+    content: "\f10d";
+    top: 0px;
+    left: 0px;
+  }
+  &:after {
+    content: "\f10e";
+    right: 0px;
+    bottom: 0px;
+  }
+}

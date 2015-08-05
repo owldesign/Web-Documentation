@@ -1,0 +1,49 @@
+/* ============================================ *
+ * Tooltips
+ * ============================================ */
+[data-tip] {
+  position: relative;
+  display: inline-block;
+  &.tx-ltgray { color: $lightGray; }
+  &.tx-yellow { color: $yellow; }
+  &.tx-red { color: $red; }
+  &.tx-green { color: $green; }
+  &.tx-purple { color: $purple; }
+  &.tx-teal { color: $teal; }
+  
+  &:before, &:after {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 1000000;
+    top: -35px;
+    left: 0px;
+    pointer-events: none; 
+    @include transform(translate3d(0,0,0));
+    @include transition(.3s ease);
+  }
+  &:hover:before, &:hover:after, &:focus:before, &:focus:after { visibility: visible; opacity: 1; }
+  &:before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    margin-left: -3px;
+    background: transparent;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid black;
+    z-index: 1000001;
+  }
+  &:after {
+    content: attr(data-tip);
+    background: black;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    font-size: 12px;
+    line-height: 12px;
+    white-space: nowrap;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+  }
+}

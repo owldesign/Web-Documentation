@@ -1,0 +1,18 @@
+/* ============================================ *
+ * Wells & Info Block
+ * ============================================ */
+.well {
+  position: relative;
+  padding: 20px;
+  margin: 15px 0;
+  background-color: $lightGray;
+  border-radius: 10px;
+  i { position: absolute; left: 30px; top: 50%; margin-top: -23px; font-size: 5em; color: white; }
+  p { color: white; span { color: darken(white, 30); } }
+  &.yellow, &.red, &.green, &.purple, &.teal { padding: 20px 15px 20px 100px; }
+  &.yellow { background-color: $yellow; p span { color: lighten($yellow, 20); } }
+  &.red { background-color: $red; p span { color: lighten($red, 20); } }
+  &.green { background-color: $green; p span { color: lighten($green, 20); } }
+  &.purple { background-color: $purple; p span { color: lighten($purple, 20); } }
+  &.teal { background-color: $teal; p span { color: lighten($teal, 20); } }
+}

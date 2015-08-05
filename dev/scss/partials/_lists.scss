@@ -1,0 +1,14 @@
+/* ============================================ *
+ * Lists
+ * ============================================ */
+.ul-list {
+  li {
+    
+    i { margin-right: 8px; font-size: .9em; }
+    &.li-yellow i { color: $yellow; }
+    &.li-red i { color: $red; }
+    &.li-green i { color: $green; }
+    &.li-purple i { color: $purple; }
+    &.li-teal i { color: $teal; }
+  }
+}

@@ -1,0 +1,30 @@
+sections:
+  -
+    title: "Welcome"
+    sub_title: "Introduction"
+    section_copy: "Hello, this is just a section copy."
+    id: "welcome"
+    icon: "fa-cog"
+    content: 
+      -
+        title: "Credits"
+        copy: "This content is for writing stuff about credits related to this project"
+        code: |
+          @import 'partials/quotes';
+          @import 'partials/tabs';
+          @import 'partials/tooltips';
+          @import 'partials/wells';
+      -
+        title: "Licence"
+        copy: "The project is licences under MIT"
+  -
+    title: "Typography"
+    sub_title: ""
+    section_copy: "This section is for the typography of the project"
+    id: "typography"
+    icon: "fa-text"
+    content:
+      -
+        title: "Headers"
+        copy: "This is just for all the headers"
+

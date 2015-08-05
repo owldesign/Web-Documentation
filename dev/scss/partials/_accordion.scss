@@ -1,0 +1,19 @@
+/* ============================================ *
+ * Accordion
+ * ============================================ */
+.accordion {
+  margin-bottom: 1px;
+  padding: 10px;
+  text-align: center;
+  background-color: lighten($lightGray, 45);
+  cursor: pointer;
+  width: 290px;
+  @include transition(all .3s ease);
+  &:hover { background-color: $green; color: white; }
+  &.accordion-open { background-color: $green; color: white; }
+}
+.accordion_container {
+  padding: 20px 0;
+  width: 290px;
+  box-sizing: border-box;
+}

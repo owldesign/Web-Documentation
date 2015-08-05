@@ -9,9 +9,34 @@ App = (function() {
   }
 
   App.prototype.init = function() {
-    var styles;
+    var configTemplate, pageTemplate, scrollTo, styles;
     styles = ["display: block", "background: #f7cd81", "color: white", "padding: 20px 20px 20px 20px", "text-align: center", "font-weight: normal", "font-size: 20px", "line-height: 60px"].join(';');
-    return console.log('%c Web Documentation!', styles, 'Has loaded.');
+    console.log('%c Web Documentation!', styles, 'Has loaded.');
+    scrollTo = function(hash) {
+      return location.hash = '#' + hash;
+    };
+    $(document).on('click', '#sidebar a', function(e) {
+      return console.log(e);
+    });
+    _.templateSettings.variable = "docs";
+    pageTemplate = _.template($('#page-template').html());
+    configTemplate = _.template($('#config-template').html());
+    return $.ajax({
+      url: '/content.yml',
+      success: function(data) {
+        YAML.load('/content.yml', function(content) {
+          $('#page-wrapper').html(pageTemplate(content));
+          return Prism.highlightAll();
+        });
+        return YAML.load('/config.yml', function(config) {
+          $('#sidebar header').html(configTemplate(config));
+          return console.log(config);
+        });
+      },
+      error: function(error) {
+        return console.log(error);
+      }
+    });
   };
 
   App.prototype.tabs = function() {

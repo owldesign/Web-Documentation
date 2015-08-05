@@ -1,0 +1,11 @@
+/* ============================================ *
+ * Highlighter
+ * ============================================ */
+.hl-ltgray, .hl-gray, .hl-yellow, .hl-red, .hl-green, .hl-purple, .hl-teal { padding: 2px 3px; }
+.hl-ltgray { background-color: $lightGray; color: white; }
+.hl-gray { background-color: $gray; color: white; }
+.hl-yellow { background-color: $yellow; color: white; }
+.hl-red { background-color: $red; color: white; }
+.hl-green { background-color: $green; color: white; }
+.hl-purple { background-color: $purple; color: white; }
+.hl-teal { background-color: $teal; color: white; }

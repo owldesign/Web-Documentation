@@ -12,17 +12,62 @@
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="assets/css/demo.css">
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/vendor/tabs.css">
+    <link rel="stylesheet" href="assets/css/vendor/prism.css">
     <link rel="stylesheet" href="assets/css/vendor/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/application.css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,400italic,700' rel='stylesheet' type='text/css'>
     <script src="assets/js/vendor/modernizr-2.6.2.min.js"></script>
   </head>
   <body>
 
+  <!-- Configuration -->
+  <script type="text/template" class="config-template" id="config-template">
+    <div class="logo"><img src="assets/images/<%= docs.logo %>" /></div>
+    <h1 class="title"><%= docs.title %></h1>
+    <p class="info">v<%= docs.version %> - Last Updated <%= docs.last_updated %></p>
+  </script>
+
+
+  <!-- Page Wrapper -->
+  <section id="page-wrapper"></section>
+  <script type="text/template" class="page-template" id="page-template">
     <section id="sidebar">
+      <header></header>
+
+      <nav>
+        <% _.each(docs.sections, function(section, index) { %> 
+          <a href="#<%= section.id %>"<% if(section.sub_title) { %> data-subhead="<%= section.sub_title %>"<% } %>><i class="fa fa-cog"></i><%= section.title %></a>
+        <% }); %>
+      </nav>
+    </section>
+
+    <section id="content">
+      <% _.each(docs.sections, function(section, index) { %> 
+        <section id="<%= section.id %>" class="<%= section.id %>-section">
+          <header>
+            <h2 class="hb"><%= section.title %></h2>
+            <p><%= section.section_copy %></p>
+          </header>
+          <% _.each(section.content, function(block, index) { %> 
+            <div class="sub-content">
+              <h3 class="content-title"><%= block.title %></h3>
+              <p><%= block.copy %></p>
+              <% if (block.code) { %>
+                <pre class="language-scss"><code class="language-scss"><%= block.code %></code></pre>
+              <% } %>
+            </div>
+          <% }); %>
+        </section>
+      <% }); %>
+    </section>
+  </script>
+  
+
+
+    <section id="sidebars" style="display:none;">
       <header>
         <i class="fa fa-file-text"></i>
         <p class="title">Web Documentation</p>
@@ -56,14 +101,8 @@
       </nav>
     </section>
 
-    <section id="content">
+    <section id="content" style="display: none;">
       
-      <!-- Welcome -->
-      <section class="demo-welcome">
-        <h1 class="hb">Web Documentation Welcome!</h1>
-        <p>Here are some examples of the typography elements included with the framework for quick and easy way to create and edit your content.</p>
-      </section>
-
       <!-- Color Pallete -->
       <section class="demo-color-pallete">
         <h2 class="hb">Color Pallete</h2>

@@ -1,0 +1,29 @@
+/* ============================================ *
+ * Tabs
+ * ============================================ */
+#tabs {
+  padding-bottom: 20px;
+  border-bottom: 1px solid lighten(black, 90);
+  @include clearfix;
+  li {
+    float: left;
+    margin-right: 1px;
+    a {
+      display: block;
+      padding: 10px 50px;
+      background-color: lighten($lightGray, 45);
+      color: $gray;
+      &.tabulous_active { background-color: $green !important; color: white !important; }
+      &:hover { background-color: $green; color: white; }
+    }
+  }
+}
+#tabs_container {
+  padding: 10px 0;
+  overflow: hidden;
+  position: relative;
+  background: white;
+  div {
+    margin-right: 40px;
+  }
+}
