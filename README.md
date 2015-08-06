@@ -6,7 +6,7 @@
 ***  
 
 
-Framework for making web docs or other user instructions. [demo here](http://owldesign.github.io/Web-Documentation/ "Web Documentation").
+Framework for making web docs or other user instructions. [View Demo](http://webdocumentation.owl-design.net/ "Web Documentation").
 
 ***
 
