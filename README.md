@@ -1,14 +1,21 @@
-# HTML Web Documenation
+![image](http://od-demo-assets.s3.amazonaws.com/webdocumentation/web-documentation-logo.png)
+
+[![image](https://img.shields.io/badge/version-0.0.1-brightgreen.svg)](https://github.com/owldesign/Nutshell)
+[![image](https://img.shields.io/github/license/mashape/apistatus.svg)](http://opensource.org/licenses/MIT)
+
+***  
+
+
 Framework for making web docs or other user instructions. [demo here](http://owldesign.github.io/Web-Documentation/ "Web Documentation").
 
 ***
 
 ## Usage
 
-* Open `config.yml` and update to fit your project
-* Open `content.yml` and add documentation sections
+* Open `app/config.yml` and update to fit your project
+* Open `app/content.yml` and add documentation sections
 
-See example `config.yml` and `content.yml` files for usage.
+See example `app/config.yml` and `app/content.yml` files for usage.
 
 
 ## Content.yml
@@ -49,4 +56,7 @@ Sub sections can have additional variables, here's a full list (more will be add
   * `image_copy_before` - copy before image
   * `image_copy_after` - copy after image
 
+## Config.yml
+
+Update this file to fit your project
   
