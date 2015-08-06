@@ -1,7 +1,8 @@
 title: "Web Documentation"
 version: "0.0.1"
-logo: "logo.svg" # See font-awesome icons
+logo: "logo.svg"
 last_updated: "August 5, 2015"
+copyright: "2015 &copy; All Rights Reserved."
 
 welcome_message: "Web Documentation Welcome!"
 welcome_copy: "Here are some examples of the typography elements included with the framework for quick and easy way to create and edit your content."

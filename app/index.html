@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Web Documentation</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
@@ -23,282 +23,98 @@
   </head>
   <body>
 
-  <!-- Configuration -->
-  <script type="text/template" class="config-template" id="config-template">
-    <div class="logo"><img src="assets/images/<%= docs.logo %>" /></div>
-    <h1 class="title"><%= docs.title %></h1>
-    <p class="info">v<%= docs.version %> - Last Updated <%= docs.last_updated %></p>
-  </script>
+    <!-- Navigation Trigger -->
+    <a href="#" id="menu-trigger"><i class="fa fa-chevron-right"></i></a>
 
+    <!-- Configuration -->
+    <script type="text/template" class="config-template" id="config-template">
+      <div class="logo"><img src="assets/images/<%= docs.logo %>" /></div>
+      <h1 class="title"><%= docs.title %></h1>
+      <p class="info">v<%= docs.version %> - Last Updated <%= docs.last_updated %></p>
+    </script>
 
-  <!-- Page Wrapper -->
-  <section id="page-wrapper"></section>
-  <script type="text/template" class="page-template" id="page-template">
-    <section id="sidebar">
-      <header></header>
+    <!-- Footer -->
+    <script type="text/template" class="footer-template" id="footer-template">
+      <p class="copyright"><%= docs.copyright %></p>
+    </script>
 
-      <nav>
-        <% _.each(docs.sections, function(section, index) { %> 
-          <a href="#<%= section.id %>"<% if(section.sub_title) { %> data-subhead="<%= section.sub_title %>"<% } %>><i class="fa fa-cog"></i><%= section.title %></a>
-        <% }); %>
-      </nav>
-    </section>
-
-    <section id="content">
-      <% _.each(docs.sections, function(section, index) { %> 
-        <section id="<%= section.id %>" class="<%= section.id %>-section">
-          <header>
-            <h2 class="hb"><%= section.title %></h2>
-            <p><%= section.section_copy %></p>
-          </header>
-          <% _.each(section.content, function(block, index) { %> 
-            <div class="sub-content">
-              <h3 class="content-title"><%= block.title %></h3>
-              <p><%= block.copy %></p>
-              <% if (block.code) { %>
-                <pre class="language-scss"><code class="language-scss"><%= block.code %></code></pre>
-              <% } %>
-            </div>
+    <!-- Page Wrapper -->
+    <section id="page-wrapper"></section>
+    <script type="text/template" class="page-template" id="page-template">
+      <section id="sidebar">
+        <header id="header"></header>
+        <nav>
+          <% _.each(docs.sections, function(section, index) { %> 
+            <a href="#<%= section.id %>"<% if(section.sub_sections) { %> class="subnav"<% } else { %> class="anchor"<% } %>><i class="fa fa-cog"></i><%= section.title %></a> 
+            <% if(section.sub_sections) { %>
+              <div class="subnav-container">
+              <% _.each(section.sub_sections, function(block, index) { %> 
+                <a href="#<%= block.id %>" class="anchor"><i class="fa <%= block.icon %>"></i><%= block.title %></a>
+              <% }); %>
+              </div>
+            <% } %>
           <% }); %>
-        </section>
-      <% }); %>
-    </section>
-  </script>
+        </nav>
+      </section>
+
+      <section id="content">
+        <% _.each(docs.sections, function(section, index) { %> 
+          <section id="<%= section.id %>" class="<%= section.id %>-section">
+            <header>
+              <h2 class="hb"><%= section.title %> <% if(section.sub_title) { %> <span><%= section.sub_title %></span><% } %></h2>
+              <p><%= section.copy %></p>
+            </header>
+            <% _.each(section.sub_sections, function(block, index) { %> 
+              <div class="sub-content" id="<%= block.id %>">
+                <header>
+                  <h3 class="content-title"><%= block.title %></h3>
+                  <p><%= block.copy %></p>
+                </header>
+
+                <!-- Code Block -->
+                <% if (block.code) { %>
+                <div class="code-block" id="<%= block.id %>">
+                  <pre class="language-scss"><code class="language-scss"><%= block.code %></code></pre>
+                </div>
+                <% } %>
+
+                <!-- YouTube Block -->
+                <% if (block.youtube) { %>
+                  <div class="youtube-block" id="<%= block.id %>">
+                  <% _.each(block.youtube, function(youtube, index) { %>
+                    <div class="youtube-item">
+                    <% if (youtube.youtube_copy_before) { %><p class="copy-before"><%= youtube.youtube_copy_before %></p><% } %>
+                    <div class="videoWrapper">
+                      <iframe width="420" height="300" src="https://www.youtube.com/embed/<%= youtube.embed %>?rel=0&hd=1&showsearch=0&vq=hd720" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <% if (youtube.youtube_copy_after) { %><p class="copy-after"><%= youtube.youtube_copy_after %></p><% } %>
+                    </div>
+                  <% }); %>
+                  </div>
+                <% } %>
+
+                <!-- Image Block -->
+                <% if (block.image) { %>
+                <div class="image-block" id="<%= block.id %>">
+                  <% _.each(block.image, function(image, index) { %>
+                    <div class="image-item">
+                      <% if (image.image_copy_before) { %><p class="copy-before"><%= image.image_copy_before %></p><% } %>
+                      <div class="imageWrapper"><img src="<%= image.url %>" /></div>
+                      <% if (image.image_copy_after) { %><p class="copy-after"><%= image.image_copy_after %></p><% } %>
+                    </div>
+                  <% }); %>
+                </div>
+                <% } %>
+
+              </div>
+            <% }); %>
+          </section>
+        <% }); %>
+
+        <footer id="footer"></footer>
+      </section>
+    </script>
   
-
-
-    <section id="sidebars" style="display:none;">
-      <header>
-        <i class="fa fa-file-text"></i>
-        <p class="title">Web Documentation</p>
-        <p class="info">v1.0 - Last Updated July 12, 2013</p>
-      </header>
-
-      <nav>
-        <a href="#" data-subhead="Sub Information"><i class="fa fa-cog"></i>Navigation Item</a>
-        <a href="#"><i class="fa fa-cog"></i>Navigation Item</a>
-        <a href="#"><i class="fa fa-cog"></i>Navigation Item</a>
-        <a href="#" data-subhead="Sub Information"><i class="fa fa-cog"></i>Navigation Item</a>
-        <a href="#"><i class="fa fa-cog"></i>Navigation Item</a>
-        <a href="#" class="subnav"><i class="fa fa-cog"></i>Navigation Item</a>
-        <div class="subnav-container">
-          <a href="#"><i class="fa fa-rocket"></i>Navigation Item</a>
-          <a href="#"><i class="fa fa-rocket"></i>Navigation Item</a>
-          <a href="#" data-subhead="Sub Information"><i class="fa fa-rocket"></i>Navigation Item</a>
-          <a href="#"><i class="fa fa-rocket"></i>Navigation Item</a>
-        </div>
-        <a href="#"><i class="fa fa-cog"></i>Navigation Item</a>
-        <a href="#"><i class="fa fa-cog"></i>Navigation Item</a>
-        <a href="#" class="subnav"><i class="fa fa-cog"></i>Navigation Item</a>
-        <div class="subnav-container">
-          <a href="#"><i class="fa fa-rocket"></i>Navigation Item</a>
-          <a href="#"><i class="fa fa-rocket"></i>Navigation Item</a>
-          <a href="#" data-subhead="Sub Information"><i class="fa fa-rocket"></i>Navigation Item</a>
-          <a href="#"><i class="fa fa-rocket"></i>Navigation Item</a>
-        </div>
-        <a href="#"><i class="fa fa-cog"></i>Navigation Item</a>
-
-      </nav>
-    </section>
-
-    <section id="content" style="display: none;">
-      
-      <!-- Color Pallete -->
-      <section class="demo-color-pallete">
-        <h2 class="hb">Color Pallete</h2>
-        <p>Available framework colors you can use...(or make your own)</p>
-      </section>
-
-      <!-- Headings -->
-      <section class="demo-headings">
-        <h2 class="hb">Headings</h2>
-        <aside class="float-left">
-          <h1>This is a Heading 1 Element</h1>
-          <h2>This is a Heading 2 Element</h2>
-          <h3>This is a Heading 3 Element</h3>
-          <h4>This is a Heading 4 Element</h4>
-          <h5>This is a Heading 5 Element</h5>
-          <h6>This is a Heading 6 Element</h6>
-        </aside>
-
-        <aside class="float-right">
-          <h1 class="it">This is a Heading 1 Element</h1>
-          <h2 class="it">This is a Heading 2 Element</h2>
-          <h3 class="it">This is a Heading 3 Element</h3>
-          <h4 class="it">This is a Heading 4 Element</h4>
-          <h5 class="it">This is a Heading 5 Element</h5>
-          <h6 class="it">This is a Heading 6 Element</h6>
-        </aside>
-      </section>
-
-      <!-- Highlited Text -->
-      <section class="demo-highlighted-text">
-        <h2 class="hb">Highlighted Text</h2>
-        <p>Great to call attention or to flag any phrase in your text.</p>
-
-        <p>Lorem ipsum dolor sit amet. Important <span class="hl-ltgray">Donec nunc nisl</span>, pretium pretium <span class="hl-gray">aliquet eu</span>, vehicula ac felis. Curabitur quis <span class="hl-yellow">metus vel</span> erat faucibus <span class="hl-red">iaculis</span>. Lorem ipsum brand new , consectetur <span class="hl-green">adipiscing elit</span>.Donec nunc nisl, pretium <span class="hl-purple">pretium aliquet eu</span>, vehicula ac felis. Curabitur quis <span class="hl-teal it">metus vel</span> erat faucibus iaculis.</p>
-      </section>
-
-      <!-- Tooltips -->
-      <section class="demo-tooltips">
-        <h2 class="hb">Tooltips</h2>
-        <p>Lorem ipsum dolor sit amet. Important <span class="tt tx-green" data-tip="This is a Tooltip">Donec nunc nisl</span>, pretium pretium aliquet eu, vehicula ac felis. Curabitur quis metus vel erat faucibus iaculis. Lorem ipsum brand new , consectetur adipiscing elit.Donec nunc nisl, pretium pretium aliquet eu, vehicula ac felis. Curabitur quis metus vel erat faucibus iaculis.</p>
-      </section>
-
-      <!-- Styled Lists -->
-      <section class="demo-styled-list">
-        <h2 class="hb">Styled List</h2>
-        <p>You can use any icons from Font-Awesome.
-        <aside class="float-left">
-          <ul class="ul-list">
-            <li><i class="fa fa-angle-right"></i>List Item</li>
-            <li class="li-yellow"><i class="fa fa-angle-right"></i>List Item</li>
-            <li class="li-red"><i class="fa fa-angle-right"></i>List Item</li>
-            <li class="li-green"><i class="fa fa-angle-right"></i>List Item</li>
-            <li class="li-purple"><i class="fa fa-angle-right"></i>List Item</li>
-            <li class="li-teal"><i class="fa fa-angle-right"></i>List Item</li>
-          </ul>
-        </aside>
-        <aside class="float-left">
-          <ul class="ul-list">
-            <li><i class="fa fa-angle-double-right"></i>List Item</li>
-            <li class="li-yellow"><i class="fa fa-angle-double-right"></i>List Item</li>
-            <li class="li-red"><i class="fa fa-angle-double-right"></i>List Item</li>
-            <li class="li-green"><i class="fa fa-angle-double-right"></i>List Item</li>
-            <li class="li-purple"><i class="fa fa-angle-double-right"></i>List Item</li>
-            <li class="li-teal"><i class="fa fa-angle-double-right"></i>List Item</li>
-          </ul>
-        </aside>
-        <aside class="float-left">
-          <ul class="ul-list">
-            <li><i class="fa fa-asterisk"></i>List Item</li>
-            <li class="li-yellow"><i class="fa fa-asterisk"></i>List Item</li>
-            <li class="li-red"><i class="fa fa-asterisk"></i>List Item</li>
-            <li class="li-green"><i class="fa fa-asterisk"></i>List Item</li>
-            <li class="li-purple"><i class="fa fa-asterisk"></i>List Item</li>
-            <li class="li-teal"><i class="fa fa-asterisk"></i>List Item</li>
-          </ul>
-        </aside>
-        <aside class="float-left">
-          <ul class="ul-list">
-            <li><i class="fa fa-star"></i>List Item</li>
-            <li class="li-yellow"><i class="fa fa-star"></i>List Item</li>
-            <li class="li-red"><i class="fa fa-star"></i>List Item</li>
-            <li class="li-green"><i class="fa fa-star"></i>List Item</li>
-            <li class="li-purple"><i class="fa fa-star"></i>List Item</li>
-            <li class="li-teal"><i class="fa fa-star"></i>List Item</li>
-          </ul>
-        </aside>
-        <aside class="float-left">
-          <ul class="ul-list">
-            <li><i class="fa fa-check"></i>List Item</li>
-            <li class="li-yellow"><i class="fa fa-check"></i>List Item</li>
-            <li class="li-red"><i class="fa fa-check"></i>List Item</li>
-            <li class="li-green"><i class="fa fa-check"></i>List Item</li>
-            <li class="li-purple"><i class="fa fa-check"></i>List Item</li>
-            <li class="li-teal"><i class="fa fa-check"></i>List Item</li>
-          </ul>
-        </aside>
-      </section>
-
-      <!-- Wells & Info Boxes -->
-      <section class="demo-wells-info">
-        <h2 class="hb">Wells &amp; Info Boxes</h2>
-        
-        <div class="well">
-          <p>This is a well, you can put any info here that you like.  This is an inline span element. <span class="it">You can also have another block span element.<span></p>
-        </div>
-
-        <div class="well yellow">
-          <i class="icon-exclamation-sign"></i>
-          <p>This is a well, you can put any info here that you like.  This is an inline span element. <span>You can also have another block span element.<span></p>
-        </div>
-
-        <div class="well red">
-          <i class="icon-warning-sign"></i>
-          <p>This is a well, you can put any info here that you like.  This is an inline span element. <span>You can also have another block span element.<span></p>
-        </div>
-
-        <div class="well green">
-          <i class="icon-thumbs-up"></i>
-          <p>This is a well, you can put any info here that you like.  This is an inline span element. <span>You can also have another block span element.<span></p>
-        </div>
-
-        <div class="well purple">
-          <i class="icon-thumbs-up-alt"></i>
-          <p>This is a well, you can put any info here that you like.  This is an inline span element. <span>You can also have another block span element.<span></p>
-        </div>
-
-        <div class="well teal">
-          <i class="icon-asterisk"></i>
-          <p>This is a well, you can put any info here that you like.  This is an inline span element. <span>You can also have another block span element.<span></p>
-        </div>
-
-      </section>
-
-      <!-- Quotes -->
-      <section class="demo-quotes">
-        <h2 class="hb">Quotes</h2>
-        <aside class="quote float-left">
-          <p>The pursuit of truth and beauty is a sphere of activity in which we are permitted to remain children all our lives.</p>
-        </aside>
-        <aside class="quote float-right">
-          <p>The pursuit of truth and beauty is a sphere of activity in which we are permitted to remain children all our lives.<span class="it">Albert Einstein</span></p>
-        </aside>
-      </section>
-
-      <!-- Tabs -->
-      <section class="demo-tabs">
-        <h2 class="hb">Tabs</h2>
-        <div id="tabs">
-          <ul>
-            <li><a href="#tabs-1" title="">Tab 1</a></li>
-            <li><a href="#tabs-2" title="">Tab 2</a></li>
-            <li><a href="#tabs-3" title="">Tab 3</a></li>
-            <li><a href="#tabs-4" title="">Tab 4</a></li>
-            <li><a href="#tabs-5" title="">Tab 5</a></li>
-          </ul>
-          <div id="tabs_container">
-            <div id="tabs-1">
-              <p>First Tab, Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auct.</p>
-              <p>Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
-            </div>
-            <div id="tabs-2">
-              <p>Second Tab, Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auct.</p>
-            </div>
-            <div id="tabs-3">
-              <p>Third Tab, Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auct.</p>
-            </div>
-            <div id="tabs-4">
-              <p>Fourth Tab, Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auct.</p>
-            </div>
-            <div id="tabs-5">
-              <p>Fifth Tab, Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auct.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Tabs -->
-      <section class="demo-accordion">
-        <h2 class="hb">Accordion</h2>
-        <div class="accordion" id="nav-section1">Section 1<span></span></div>
-        <div class="accordion_container"><p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auct.</p></div>
-        <div class="accordion" id="nav-section2">Section 2<span></span></div>
-        <div class="accordion_container"><p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auct.</p></div>
-        <div class="accordion" id="nav-section3">Section 3<span></span></div>
-        <div class="accordion_container"><p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auct.</p></div>
-        <div class="accordion" id="nav-section4">Section 4<span></span></div>
-        <div class="accordion_container"><p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auct.</p></div>
-      </section>
-
-    </section>
-
-
-
-
-
-
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
     <script src="assets/js/plugins.js"></script>

@@ -3,54 +3,49 @@ var App,
 
 App = (function() {
   function App() {
-    this.accordion = bind(this.accordion, this);
-    this.tabs = bind(this.tabs, this);
     this.init = bind(this.init, this);
   }
 
   App.prototype.init = function() {
-    var configTemplate, pageTemplate, scrollTo, styles;
+    var configData, configTemplate, contentData, footerTemplate, nav, pageTemplate, styles;
     styles = ["display: block", "background: #f7cd81", "color: white", "padding: 20px 20px 20px 20px", "text-align: center", "font-weight: normal", "font-size: 20px", "line-height: 60px"].join(';');
     console.log('%c Web Documentation!', styles, 'Has loaded.');
-    scrollTo = function(hash) {
-      return location.hash = '#' + hash;
-    };
-    $(document).on('click', '#sidebar a', function(e) {
-      return console.log(e);
+    FastClick.attach(document.body);
+    $('#menu-trigger').on('click', function(e) {
+      e.preventDefault();
+      $(this).toggleClass('active');
+      $('body').toggleClass('active');
+      $('#content').toggleClass('active');
+      return $('#sidebar').toggleClass('active');
     });
     _.templateSettings.variable = "docs";
     pageTemplate = _.template($('#page-template').html());
     configTemplate = _.template($('#config-template').html());
-    return $.ajax({
-      url: '/content.yml',
-      success: function(data) {
-        YAML.load('/content.yml', function(content) {
-          $('#page-wrapper').html(pageTemplate(content));
-          return Prism.highlightAll();
-        });
-        return YAML.load('/config.yml', function(config) {
-          $('#sidebar header').html(configTemplate(config));
-          return console.log(config);
-        });
-      },
-      error: function(error) {
-        return console.log(error);
+    footerTemplate = _.template($('#footer-template').html());
+    contentData = YAML.load('/content.yml');
+    configData = YAML.load('/config.yml');
+    $('#page-wrapper').html(pageTemplate(contentData));
+    $('#header').html(configTemplate(configData));
+    $('#footer').html(footerTemplate(configData));
+    $('.subnav').accordion({
+      speed: 'fast'
+    });
+    $('.anchor').on('click', function(e) {
+      var target;
+      e.preventDefault();
+      target = $(this).attr('href');
+      return $('html, body').animate({
+        scrollTop: $(target).offset().top - 25
+      }, 500);
+    });
+    nav = $('#sidebar nav').offset();
+    console.log(nav);
+    return $(window).scroll(function() {
+      if ($(window).scrollTop() > nav.top + 35) {
+        return $('#sidebar nav').addClass('fixed');
+      } else {
+        return $('#sidebar nav').removeClass('fixed');
       }
-    });
-  };
-
-  App.prototype.tabs = function() {
-    return $("#tabs").tabulous({
-      effect: "scale"
-    });
-  };
-
-  App.prototype.accordion = function() {
-    $(".subnav").accordion({
-      speed: "fast"
-    });
-    return $(".accordion").accordion({
-      speed: "fast"
     });
   };
 
@@ -61,7 +56,5 @@ App = (function() {
 $(function() {
   var Application;
   Application = new App();
-  Application.init();
-  Application.tabs();
-  return Application.accordion();
+  return Application.init();
 });

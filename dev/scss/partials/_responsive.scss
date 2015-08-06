@@ -1,0 +1,34 @@
+/* ============================================ *
+ * Responsive
+ * ============================================ */
+
+@media (max-width: 800px) {
+  body {
+    background-position: -400px 0 !important;
+  }
+
+  // Menu Trigger
+  #menu-trigger {
+    @include transform(translateX(0));
+  }
+
+  // Sidebar
+  #sidebar {
+    @include transform(translateX(-400px));
+  }
+
+  // Content 
+  #content {
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 800px) {
+  body {
+    overflow: auto !important;
+  }
+  // Menu Trigger
+  #menu-trigger {
+    @include transform(translateX(-100px) !important);
+  }
+}

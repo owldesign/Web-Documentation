@@ -1,30 +1,67 @@
 sections:
   -
     title: "Welcome"
-    sub_title: "Introduction"
-    section_copy: "Hello, this is just a section copy."
     id: "welcome"
+    sub_title: "Introduction"
+    copy: "Hello, this is just a section copy."
     icon: "fa-cog"
-    content: 
+    sub_sections: 
       -
-        title: "Credits"
+        title: "Code Block Content"
+        id: "code-block-content"
         copy: "This content is for writing stuff about credits related to this project"
+        icon: "fa-caret-right"
         code: |
           @import 'partials/quotes';
           @import 'partials/tabs';
           @import 'partials/tooltips';
           @import 'partials/wells';
+        youtube:
+          -
+            embed: "ioFmTuMYxAo"
+            youtube_copy_before: "This is copy block that comes before the youtube video"
+            youtube_copy_after: "This is copy block that comes after the youtube video"
+          -
+            embed: "qn-X5A0gbMA"
+            youtube_copy_before: "This is copy block that comes before the youtube video"
+            youtube_copy_after: "This is copy block that comes after the youtube video"
+        image:
+          -
+            url: "http://od-demo-assets.s3.amazonaws.com/webdocumentation/image-placeholder.jpg"
+            image_copy_before: "This is a copy block that comes before an image"
+            image_copy_after: "This is a copy block that comes after an image"
+          -
+            url: "http://od-demo-assets.s3.amazonaws.com/webdocumentation/image-placeholder.jpg"
+            image_copy_before: "This is a copy block that comes before an image"
+            image_copy_after: "This is a copy block that comes after an image"
+
+
       -
-        title: "Licence"
-        copy: "The project is licences under MIT"
+        title: "More Content"
+        id: "more-content"
+        copy: "Youtube block content can also be used"
+        icon: "fa-caret-right"
+      -
+        title: "Another Content Block"
+        id: "another-content-block"
+        copy: "This block is for images you want to use"
+        icon: "fa-caret-right"
   -
     title: "Typography"
-    sub_title: ""
-    section_copy: "This section is for the typography of the project"
     id: "typography"
+    sub_title: ""
+    copy: "This section is for the typography of the project"
     icon: "fa-text"
-    content:
+    sub_sections:
       -
         title: "Headers"
+        id: "headers"
         copy: "This is just for all the headers"
+        icon: "fa-caret-right"
+  -
+    title: "Color Pelette"
+    id: "color-pelette"
+    sub_title: ""
+    copy: "This section is for the color pelette of the project"
+    icon: "fa-text"
 

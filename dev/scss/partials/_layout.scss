@@ -2,9 +2,44 @@
  * General
  * ============================================ */
 body {
-  background: url(../images/bg.jpg) repeat-y;
   font-size: 62.5%;
   color: $gray;
+  background: url(../images/bg.jpg) repeat-y;
+  @include transition(background .5s cubic-bezier(1, 0.09, 0.24, 0.9));
+  &.active {
+    background-position: 0 0 !important;
+    // overflow-x: hidden;
+    #page-wrapper {
+      overflow: hidden;
+    }
+  }
+}
+
+/* ============================================ *
+ * Menu Trigger
+ * ============================================ */
+#menu-trigger {
+  @include position(fixed, 0 null null 0);
+  z-index: 2;
+  display: block;
+  padding: 20px 0;
+  width: 27px;
+  text-align: center;
+  background: #f5f2f0;
+  @include transition(transform .5s cubic-bezier(1, 0.09, 0.24, 0.9), width .3s ease);
+  i {
+    @include killflicker;
+    @include transition(all .5s ease);
+  }
+  &:hover {
+    width: 47px;
+  }
+  &.active {
+    @include transform(translateX(300px));
+    i {
+      @include transform(rotate(180deg));
+    }
+  }
 }
 
 /* ============================================ *
@@ -12,6 +47,8 @@ body {
  * ============================================ */
 #page-wrapper {
   @include display(flex);
+  @include align-items(stretch);
+  @include flex-direction(column);
 }
 
 /* ============================================ *
@@ -19,15 +56,34 @@ body {
  * ============================================ */
 #content {
   padding: 0 45px;
+  margin-left: 300px;
+  @include transition(margin .5s cubic-bezier(1, 0.09, 0.24, 0.9));
   @include flex(1);
+  &.active {
+   margin-left: 300px;
+  }
   & > section {
     margin: 40px 0;
+    h2 {
+      span {
+        display: block;
+        text-transform: none;
+        font-weight: $font-light;
+        font-size: 13px;
+        padding-bottom: 5px;
+      }
+    }
   }
   .sub-content {
+    header {
+      margin: 30px 0 20px 0;
+    }
     h3 {
       padding-left: 10px;
       border-left: 2px solid $lightGreen;
     }
+    .copy-before { margin-bottom: 10px; }
+    .copy-after { margin-top: 10px; }
   }
 }
 
@@ -36,12 +92,19 @@ body {
  * Sidebar
  * ============================================ */
 #sidebar {
-  width: 300px;
+  position: absolute;
+  z-index: 3;
+  @include size(300px auto);
+  @include transition(transform .6s cubic-bezier(1, 0.09, 0.24, 0.9));
+  &.active {
+    @include transform(none);
+  }
   header {
     position: relative;
     padding: 20px;
     background-color: $lightGreen;
     border-bottom: 1px solid white;
+    h1 { margin-bottom: 0; }
     p { color: white; text-align: center; }
     .title {  }
     .info {  }
@@ -52,7 +115,11 @@ body {
   }
 
   nav {
-
+    &.fixed {
+      position: fixed;
+      top: 0;
+      width: 300px;
+    }
     & > a, .subnav-container a {
       position: relative;
       display: block;
@@ -62,16 +129,7 @@ body {
       font-size: 12px;
       border-bottom: 1px solid lighten($lightGray, 40);
       box-sizing: border-box;
-      &[data-subhead] {
-        &:after {
-          content: attr(data-subhead);
-          display: block;
-          color: lighten($lightGray, 25);
-          padding-left: 40px;
-          font-weight: $font-regular;
-          font-size: 10px;
-        }
-      }
+      @include killios;
       i { font-size: 1.4em; margin: 0 10px 0 15px; color: $lightGray; vertical-align: middle; }
       &:hover {
         background-color: white;
@@ -94,6 +152,7 @@ body {
           right: 20px;
           margin-top: -6px;
           font-family: "FontAwesome";
+
         }
       }
       &.subnav.accordion-open {
@@ -121,6 +180,7 @@ body {
       position: relative;
       a {
         color: white;
+        font-weight: $font-regular;
         border-bottom: 1px solid darken(white, 10);
         background-color: $lightGreen;
         i { color: darken($lightGreen, 20); }
@@ -137,9 +197,6 @@ body {
             z-index: 2;
           }
         }
-        &[data-subhead] {
-          &:after { color: lighten($lightGreen, 20);}
-        }
       }
       &:before {
         content: "";
@@ -154,3 +211,15 @@ body {
     }
   }
 }
+
+
+/* ============================================ *
+ * Footer
+ * ============================================ */
+#footer {
+  margin: 50px 0;
+  padding-top: 20px;
+  border-top: 1px solid lighten(black, 80);
+}
+
+

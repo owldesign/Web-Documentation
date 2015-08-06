@@ -15,68 +15,50 @@ class App
     styles = ["display: block","background: #f7cd81","color: white","padding: 20px 20px 20px 20px","text-align: center","font-weight: normal","font-size: 20px","line-height: 60px"].join(';')
     console.log '%c Web Documentation!', styles, 'Has loaded.'
 
-    # Anchor Tag Scrolling
-    scrollTo = (hash) ->
-      location.hash = '#' + hash
+    # FastClick for mobile
+    FastClick.attach(document.body)
 
-    $(document).on 'click', '#sidebar a', (e) ->
-      console.log e
-      # scrollTo
-      # $('html, body').animate { scrollTop: $('#theelementidtoscroll').offset().top }, 500
+    # Navigation Trigger
+    $('#menu-trigger').on 'click', (e) ->
+      e.preventDefault()
+      $(@).toggleClass 'active'
+      $('body').toggleClass 'active'
+      $('#content').toggleClass 'active'
+      $('#sidebar').toggleClass 'active'
 
     # Setup Underscore Templates
     _.templateSettings.variable = "docs";
     pageTemplate = _.template($('#page-template').html())
     configTemplate = _.template($('#config-template').html())
+    footerTemplate = _.template($('#footer-template').html())
 
+    # Load Content & Config
+    contentData = YAML.load '/content.yml'
+    configData = YAML.load '/config.yml'
+
+    $('#page-wrapper').html(pageTemplate(contentData)) # Load Content
+    $('#header').html(configTemplate(configData)) # Load Page Info
+    $('#footer').html(footerTemplate(configData)) # Load Footer Info
+
+    # Navigation Accordion
+    $('.subnav').accordion # Navigation Accordion
+      speed: 'fast'
+
+    # Scroll To Section
+    $('.anchor').on 'click', (e) -> # Navigate to section id
+      e.preventDefault()
+      target = $(@).attr 'href'
+      $('html, body').animate { scrollTop: $(target).offset().top - 25 }, 500
     
-    # navigationTemplate = _.template($('#navigation-template').html())
-    # headerTemplate = _.template($('#header-template').html())
-    # contentTemplate = _.template($('#content-template').html())
-    
-    # Load Config File
-    # YAML.load '/config.yml', (result) ->
-    #   $('#header').html(headerTemplate(result))
-    #   $('.welcome-section h1').html result.welcome_message
-    #   $('.welcome-section p').html result.welcome_copy
-
-
-    # Build Navigation & Content
-    $.ajax
-      url: '/content.yml'
-      success: (data) ->
-        YAML.load '/content.yml', (content) ->
-          $('#page-wrapper').html(pageTemplate(content))
-          Prism.highlightAll() # ReInit code highlighting
-        
-        YAML.load '/config.yml', (config) ->
-          $('#sidebar header').html(configTemplate(config))
-          console.log config
-
-      error: (error) ->
-        console.log error
-
-
-
-
-  # Tabs
-  tabs: =>
-    $("#tabs").tabulous effect: "scale"
-
-  # Accordion
-  accordion: =>
-    # Sub Navigaiton Accordion
-    $(".subnav").accordion
-      speed: "fast"
-
-    # Accordion
-    $(".accordion").accordion
-      speed: "fast"
-
-
+    # Fixed navigation
+    nav = $('#sidebar nav').offset()
+    console.log nav
+    $(window).scroll ->
+      if $(window).scrollTop() > nav.top + 35
+        $('#sidebar nav').addClass 'fixed'
+      else
+        $('#sidebar nav').removeClass 'fixed'
 
 $ ->
   Application = new App()
   Application.init()
-  Application.tabs()
-  Application.accordion()
